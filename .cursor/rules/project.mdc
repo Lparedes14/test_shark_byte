@@ -1,0 +1,45 @@
+---
+description: Project rules for VocabDaily
+alwaysApply: true
+---
+
+# VocabDaily: rules for every coding agent
+
+You work on one task file at a time from `tasks/`. Read `docs/PRD.md` and `docs/DESIGN.md` first.
+
+## Stack
+- Next.js 14 (App Router, TypeScript)
+- Tailwind CSS
+- Supabase (Postgres with RLS)
+
+## Folder layout
+- src/app/ for pages and layouts
+- src/components/ for reusable UI components
+- lib/ for Supabase client, types and queries
+- supabase/migrations/ for SQL schema
+
+## Conventions
+- Use TypeScript strictly with explicit types
+- Follow shadcn/ui style with Tailwind (no external UI libs)
+- All Supabase queries in lib/supabase.ts
+- File-based routing with App Router
+- No hardcoded secrets – only env var names
+- Components are client components only when interactivity needed (use 'use client')
+- Keep each task to its listed files only
+
+## Commands
+- install: `npm install`
+- dev: `npm run dev`
+- test: `npm test`
+- build: `npm run build`
+
+## Never
+- never commit secrets or real Supabase keys
+- never touch files outside the current task's files list
+- never implement features from later tasks
+- never add custom topics or user accounts
+- never write exploit code or malware
+- never assume a backend API route exists – use direct Supabase client queries only
+- Never commit secrets, API keys or `.env` files; read configuration from environment variable names.
+- Never change files outside the current task's scope.
+- Open one PR per task titled `[task-NNN] <title>` with `Part of #<issue number>` in the description.
