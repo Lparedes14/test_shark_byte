@@ -5,8 +5,26 @@ import type { Topic } from "../../lib/types";
 
 export const dynamic = "force-dynamic";
 
+type GrammarTopic = Topic & {
+  isGrammar: true;
+};
+
+const GRAMMAR_TOPIC: GrammarTopic = {
+  id: "grammar",
+  name: "Grammar",
+  isGrammar: true,
+};
+
+function withGrammarTopic(topics: readonly Topic[]): Array<Topic | GrammarTopic> {
+  const vocabularyTopics: Topic[] = topics.filter((topic) => {
+    return topic.name.trim().toLowerCase() !== "grammar";
+  });
+  return [...vocabularyTopics, GRAMMAR_TOPIC];
+}
+
 export default async function HomePage(): Promise<ReactElement> {
   const topics: Topic[] = await fetchTopics();
+  const homeTopics: Array<Topic | GrammarTopic> = withGrammarTopic(topics);
 
   return (
     <main className="min-h-screen px-6 py-16">
@@ -30,7 +48,7 @@ export default async function HomePage(): Promise<ReactElement> {
             </div>
           ) : (
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {topics.map((topic) => (
+              {homeTopics.map((topic) => (
                 <li key={topic.id} className="h-full">
                   <TopicCard topic={topic} />
                 </li>
